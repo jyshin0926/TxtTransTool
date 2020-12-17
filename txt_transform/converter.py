@@ -6,7 +6,7 @@ tenThousandPos = 4
 hundredMillionPos = 9
 txtDigit = ['', '십', '백', '천', '만', '억']
 txtNumber = ['영', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구']
-txtPoint = ' 점 '
+txtPoint = ' 점'
 txtja = ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
 txtja_pn = ['기역', '니은', '디귿', '리을', '미음', '비읍', '시옷', '이응', '지읒', '치읓', '키읔', '티읕', '피읖', '히읗']
 txtEng = ['에이', '비', '씨', '디', '이', '에프', '지', '에이치', '아이', '제이', '케이', '엘', '엠', '엔', '오', '피', '큐', '알', '에스', '티',
@@ -23,10 +23,13 @@ def combtxt(input):
     hanNumStr = ''
     tmp = []
     for i in range(len(input)):
-        if input[i].isalpha() == True:
+        if input[i].isalpha() == True and input not in dialect:
             conStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
             engNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
             hanNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
+
+        elif input[i].isalpha() == True and input in dialect:
+            conStr = standard[dialect.index(input)]
 
         elif input[i].isalpha() == False:  # 숫자 하나씩만 인식되므로 뒤에 더 있을 경우까지 고려해야 함.
             tmp.append(input[i])
@@ -44,12 +47,12 @@ def combtxt(input):
             else:
                 continue
 
-    if '범위초과' not in engNumStr:
+    if '범위초과' not in engNumStr and input not in txtja and input.isalpha() != True:
         return '({0})/({1}) \n({2})/({3}) \n({4})/({5})'.format(input, conStr.strip(), input, engNumStr.strip(), input, hanNumStr.strip())
 
     else:
         if len(input) <= 5 and '.' in input and input.isalpha() == False:
-            return '({0})/({1}) \n({2})/({3})'.format(input, conStr.replace(' 점 ','').strip(), input, conStr.strip())
+            return '({0})/({1}) \n({2})/({3})'.format(input, conStr.replace(' 점 ',' ').strip(), input, conStr.strip())
 
         else:
             return '({0})/({1})'.format(input, conStr.strip())
@@ -86,12 +89,10 @@ def txt2prun(strNum):
                 return '({0})/({1})'.format(strNum, prun)
 
         elif isHangul(strNum) == True:
-            if (strNum not in dialect):
+            if strNum not in dialect:
                 return '({0})/({1})'.format(strNum, strNum)
 
-            elif (strNum in dialect):
-                std = standard[dialect.index(strNum)]
-                return '({0})/({1})'.format(strNum, std)
+
 
 
 def digit2txt(strNum):
@@ -128,7 +129,7 @@ def digit2txt(strNum):
                 # 단 '만' '억'에서는 표시 함
                 if int(ch) == 1 and (digitCount >= 1) and (digitCount != tenThousandPos) and (
                         digitCount != hundredMillionPos):
-                    resultStr = resultStr + ''
+                    resultStr = resultStr + ' '
                 elif int(ch) == 0 and (len(strNum) > 1) and ('.' not in strNum):
                     resultStr = resultStr + ''
                     # 단 '만' '억'에서는 표시 함
@@ -143,6 +144,7 @@ def digit2txt(strNum):
 
                 else:
                     resultStr = resultStr + ' ' + txtNumber[int(ch)]
+
 
             # 1억 이상
             if digitCount > hundredMillionPos:

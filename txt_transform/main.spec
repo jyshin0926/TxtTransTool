@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['C:\\Users\\Wookmawang\\Desktop\\공부\\개인 프로젝트\\transform'],
+             pathex=['C:\\Users\\tmax\\PycharmProjects\\TextTransTool\\txt_transform'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False )
+          console=False , icon='leafico.ico')
