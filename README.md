@@ -17,6 +17,7 @@ TxtTransTool.exe의 바로가기를 폴더 내에서 직접 우클릭하여 생�
 <Ver2.0 Update Function>
 * 숫자 처리(기존 Ver1.0 숫자 처리 기능 보완 --> 억 단위까지 가능, 소수 처리 가능, 1의 자리 수에 0이 있을 경우 처리 가능)
   - ex. (12345672.124)/(천 이백 삼십 사만 오천 육백 칠십 이 점 일 이 사)
+  ![image](https://user-images.githubusercontent.com/46860669/102712558-83333200-4305-11eb-9d01-95867ad7cba6.png)
 
 * 알파벳 발음 전사(기존 Ver1.0 기능 유지)
   - ex. (EBS)/(이 비 에스)
