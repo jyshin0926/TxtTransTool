@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+import re
+from textblob import TextBlob
 
 # 만 단위 자릿수
 tenThousandPos = 4
@@ -12,50 +14,100 @@ txtja_pn = ['기역', '니은', '디귿', '리을', '미음', '비읍', '시옷'
 txtEng = ['에이', '비', '씨', '디', '이', '에프', '지', '에이치', '아이', '제이', '케이', '엘', '엠', '엔', '오', '피', '큐', '알', '에스', '티',
           '유', '브이', '더블유', '엑스', '와이', '제트']
 numEng = ['제로', '원', '투', '쓰리', '포', '파이브', '식스', '세븐', '에잇', '나인']
-numHan = ['영', '한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉']
-dialect = ['요', '요게', '요렇게', '요거', '요건', '요거는', '요기', '고', '그', '고걸', '고렇게', '그죠', '그쵸']
-standard = ['이', '이게', '이렇게', '이거', '이건', '이거는', '여기', '그', '그', '그걸', '그렇게', '그렇죠', '그렇죠']
+numEngB20 = ['', '일레븐', '트웰브', '써틴', '포틴', '피프틴', '식스틴', '세븐틴', '에잇틴','나인틴']
+numEngTen = ['','텐','투웬티','써티','포티','피프티','식스티','세븐티','에잇티','나인티']
+numHan = ['영', '한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟','아홉']
+numHanTen = ['','열','스물','서른','마흔','쉰','예순','일흔','여든','아흔']
+dialect = ['요', '요게', '요렇게', '요거', '요건', '요런', '요거는', '요기', '고', '그', '고건', '고걸', '고렇게', '그죠', '그쵸','조렇게']
+standard = ['이', '이게', '이렇게', '이거', '이건', '이런', '이거는', '여기', '그', '그', '그건', '그걸', '그렇게', '그렇죠', '그렇죠','저렇게']
+gram = ['그램','그람','킬로그램','키로그램','키로그람','킬로그람']
 
+def stcTrans(input):
+    if ';' in input:
+        stc = re.sub('[-=#:^$@\"※~&%ㆍ』\\‘|\(\)\[\]\<\>`…》]', '', input)
+        txt_list = stc.split("'")
+        for i in range(len(txt_list)):
+            if txt_list[i].endswith(';'):
+                txt_list[i] = combtxt(txt_list[i].replace(';',''))
+        return ''.join(txt_list)
+    else:
+        return combtxt(input)
 
-def combtxt(input):
+def combtxt(txt):
+    input = txt.replace(' ','')
     conStr = ''
     engNumStr = ''
     hanNumStr = ''
     tmp = []
-    for i in range(len(input)):
-        if input[i].isalpha() == True and input not in dialect:
-            conStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
-            engNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
-            hanNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
 
-        elif input[i].isalpha() == True and input in dialect:
+    for i in range(len(input)):
+        if input in dialect:  # 구어체 처리
             conStr = standard[dialect.index(input)]
 
-        elif input[i].isalpha() == False:  # 숫자 하나씩만 인식되므로 뒤에 더 있을 경우까지 고려해야 함.
-            tmp.append(input[i])
-            if input[i] == ' ':
-                pass
-            if (i == len(input) - 1) or input[i + 1].isalpha() == True:
-                conStr += (digit2txt(''.join(tmp)).split('/')[1].strip('()') + ' ')
-                if len(tmp) == 1:
-                    engNumStr += numEng[int(tmp[0])] + ' '
-                    hanNumStr += numHan[int(tmp[0])] + ' '
-                else:
-                    engNumStr = '범위초과 '
-                    hanNumStr = '범위초과 '
-                tmp = []
-            else:
-                continue
+        elif input not in dialect:
+            if input[i].isalpha() == True:
+                if isHangul(input[i]) == False:    # 알파벳일 경우 띄어쓰기 포함
+                    conStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
+                    engNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
+                    hanNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()') + ' ')
 
-    if '범위초과' not in engNumStr and input not in txtja and input.isalpha() != True:
-        return '({0})/({1}) \n({2})/({3}) \n({4})/({5})'.format(input, conStr.strip(), input, engNumStr.strip(), input, hanNumStr.strip())
+                elif isHangul(input[i]) == True and input.isalpha() == False:  # 한글일 경우 띄어쓰기 없이 그대로
+                    if (i != len(input) - 1):
+                        if isHangul(input[i+1]) == False:
+                            conStr += (txt2prun(str(input[i])).split('/')[1].strip('()')) + ' '
+                            engNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()')) + ' '
+                            hanNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()')) + ' '
+                        else:
+                            conStr += (txt2prun(str(input[i])).split('/')[1].strip('()'))
+                            engNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()'))
+                            hanNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()'))
+                    else:
+                        conStr += (txt2prun(str(input[i])).split('/')[1].strip('()'))
+                        engNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()'))
+                        hanNumStr += (txt2prun(str(input[i])).split('/')[1].strip('()'))
+
+                elif (isHangul(input[i]) == True) and input.isalpha() == True:
+                    return f"({kor2eng(input)})/({txt})"
+
+            elif input[i].isalpha() == False:  # 숫자 하나씩만 인식되므로 뒤에 더 있을 경우까지 고려해야 함.
+                tmp.append(input[i])
+                if input[i] == ' ':
+                    pass
+                if (i == len(input) - 1) or input[i + 1].isalpha() == True: # 맨 끝에 도달 또는 뒤에 문자 오는 경우까지
+                    conStr += (digit2txt(''.join(tmp)).split('/')[1].strip('()') + ' ')
+                    if '.' not in input:  # 100 미만 정수일 경우만 영어, 한글 서수 발음 이중전사
+                        if int(''.join(tmp)) >= 0 and int(''.join(tmp)) <= 9:
+                            engNumStr += numEng[int(''.join(tmp))] + ' '
+                            hanNumStr += numHan[int(''.join(tmp))] + ' '
+                        elif int(''.join(tmp)) >= 10 and int(''.join(tmp)) < 20:
+                            engNumStr += numEngB20[int(''.join(tmp)) - 10] + ' '
+                            hanNumStr += numHanTen[int(tmp[0])] + ' ' + numHan[int(tmp[1])] + ' '
+                        elif int(''.join(tmp)) >= 20 and int(''.join(tmp)) < 100:
+                            engNumStr += numEngTen[int(tmp[0])] + ' ' + numEng[int(tmp[1])] + ' '
+                            hanNumStr += numHanTen[int(tmp[0])] + ' ' + numHan[int(tmp[1])] + ' '
+                        else:
+                            engNumStr = '범위초과 '
+                            hanNumStr = '범위초과 '
+                    else:
+                        engNumStr = '범위초과 '
+                        hanNumStr = '범위초과 '
+                    tmp = []
+                else:
+                    continue
+
+    if '범위초과' not in engNumStr and input.isalpha() != True:
+        return '({0})/({1}) \n({2})/({3}) \n({4})/({5})'.format(txt, conStr.strip(), txt, engNumStr.strip(), txt, hanNumStr.strip())
 
     else:
-        if len(input) <= 5 and '.' in input and input.isalpha() == False:
-            return '({0})/({1}) \n({2})/({3})'.format(input, conStr.replace(' 점 ',' ').strip(), input, conStr.strip())
+        if len(input) <= 5 and '.' in input and input.isalpha() == False and int(''.join(input[:input.index('.')])) >= 1 and int(''.join(input[:input.index('.')])) <= 12 \
+                and int(''.join(input[input.index('.')+1:])) >= 1 and int(''.join(input[input.index('.')+1:])) <= 31:  # 한국사 기념일 경우 점 발음 없이 발음할 경우 고려
+            return '({0})/({1}) \n({2})/({3})'.format(txt, conStr.replace(' 점 ',' ').strip(), txt, conStr.strip())
+
+        elif input in dialect:
+            return '({1})/({0})'.format(txt, conStr.strip())
 
         else:
-            return '({0})/({1})'.format(input, conStr.strip())
+            return '({0})/({1})'.format(txt, conStr.strip())
 
 
 def isHangul(ch):  # 주어진 문자가 한글인지 아닌지 리턴해주는 함수
@@ -63,6 +115,15 @@ def isHangul(ch):  # 주어진 문자가 한글인지 아닌지 리턴해주는 
     jamo_end_letter = 55203
     return ord(ch) >= jamo_start_letter and ord(ch) <= jamo_end_letter
 
+def kor2eng(kr): # 한국어 발음 입력 시 영어로 이중전사
+    try:
+        blob = TextBlob(kr)
+        return str(blob.translate(to='en')).lower()
+    except:
+        if isHangul(kr) == True and kr in gram[:2]:
+            return str('gram')
+        elif isHangul(kr) == True and kr in gram[2:]:
+            return str('kilogram')
 
 def txt2prun(strNum):
     if strNum.isalpha() == True:
@@ -70,7 +131,6 @@ def txt2prun(strNum):
             if strNum not in txtja:
                 concatstr = ""
                 for ch in strNum:
-
                     if ord('a') <= ord(ch) and ord(ch) <= ord('z'):
                         # index txtEnglish
                         concatstr += txtEng[ord(ch) - ord('a')] if len(concatstr) == 0 else ' ' + txtEng[
@@ -89,10 +149,8 @@ def txt2prun(strNum):
                 return '({0})/({1})'.format(strNum, prun)
 
         elif isHangul(strNum) == True:
-            if strNum not in dialect:
+            #if strNum not in dialect:
                 return '({0})/({1})'.format(strNum, strNum)
-
-
 
 
 def digit2txt(strNum):
