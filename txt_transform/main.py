@@ -5,7 +5,8 @@ import tkinter
 from tkinter import *
 from functools import partial
 from converter import *
-
+import re
+from textblob import TextBlob
 
 def convert_into_textarea(textArea, input):
     converted_input = stcTrans(input.get())
@@ -41,6 +42,5 @@ convert_into_textarea = partial(convert_into_textarea, textArea, result)
 
 label = Label(root, text=" Developer 신재영 \n jyshin0926(github) \nsjy777star@gmail.com ")
 label.grid(row=3, column=1, columnspan=4, padx=15, pady=14)
-
 
 root.mainloop()

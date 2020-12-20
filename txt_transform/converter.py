@@ -99,8 +99,11 @@ def combtxt(txt):
         return '({0})/({1}) \n({2})/({3}) \n({4})/({5})'.format(txt, conStr.strip(), txt, engNumStr.strip(), txt, hanNumStr.strip())
 
     else:
-        if len(input) <= 5 and '.' in input and input.isalpha() == False and int(''.join(input[:input.index('.')])) >= 1 and int(''.join(input[:input.index('.')])) <= 12 \
-                and int(''.join(input[input.index('.')+1:])) >= 1 and int(''.join(input[input.index('.')+1:])) <= 31:  # 한국사 기념일 경우 점 발음 없이 발음할 경우 고려
+        if len(input) <= 5 and '.' in input and input.isalpha() == False \
+                and (input[:input.index('.')].isdigit() == True
+                     and int(input[:input.index('.')])<=12 and int(input[:input.index('.')])>=1) \
+            and (input[input.index('.')+1:].isdigit() == True
+                     and int(input[input.index('.')+1:]) <= 31 and int(input[input.index('.')+1:]) >= 1) :  # 한국사 기념일 경우 점 발음 없이 발음할 경우 고려
             return '({0})/({1}) \n({2})/({3})'.format(txt, conStr.replace(' 점 ',' ').strip(), txt, conStr.strip())
 
         elif input in dialect:
