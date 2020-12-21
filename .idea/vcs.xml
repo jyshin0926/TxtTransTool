@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/txt_transform/TextBlob" vcs="" />
+    <mapping directory="$PROJECT_DIR$/txt_transform/dist/TextBlob" vcs="" />
   </component>
 </project>

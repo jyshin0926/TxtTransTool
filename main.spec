@@ -1,13 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import sys
+sys.setrecursionlimit(5000)
 block_cipher = None
-
-
 a = Analysis(['main.py'],
              pathex=['C:\\Users\\tmax\\PycharmProjects\\TextTransTool'],
              binaries=[],
-             datas=[],
-             hiddenimports=[],
+             datas=[('textblob/en/*.txt', 'textblob/en'),('textblob/en/*.xml', 'textblob/en')],
+             hiddenimports=['pkg_resources.py2_warn','pkg_resources.markers','nltk'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -23,11 +23,11 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='main',
+          name='TxtTransTool',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True )
+          console=False)

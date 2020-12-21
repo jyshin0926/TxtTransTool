@@ -1,12 +1,13 @@
 #-*- coding: utf-8 -*-
-
-import tkinter
+import sys, os
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 from tkinter import *
 from functools import partial
 from converter import *
-import re
-from textblob import TextBlob
 
 def convert_into_textarea(textArea, input):
     converted_input = stcTrans(input.get())
@@ -19,7 +20,7 @@ root.title("TxtTransTool")
 root.geometry("500x780+100+20")
 root.minsize(500,400)
 root.maxsize(500,800)
-root.iconbitmap(default='leafico.ico')
+root.iconbitmap(default='./leafico.ico')
 #root.resizable(width=True, height=False)
 
 # 결과값 변수 선언
@@ -34,7 +35,6 @@ btn.grid(row=1, column=4, pady=10);
 
 # 엔터 눌렀을 때 이벤트 거는 것
 root.bind('<Return>', lambda event: convert_into_textarea())
-
 textArea = Text(root, width=65, height=50)
 textArea.grid(row=2, column=1, columnspan=4, padx=17)
 
