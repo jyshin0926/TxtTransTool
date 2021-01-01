@@ -1,4 +1,4 @@
-# TextTransTool
+# TxtTransTool
 ETRI 이중전사규칙 텍스트 라벨링 작업에 도움이 되는 툴<br>
 
 ※ 본 프로그램의 무단수정 및 배포를 금합니다. <br>
