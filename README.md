@@ -2,7 +2,7 @@
 ETRI 이중전사규칙 텍스트 라벨링 작업에 도움이 되는 툴<br>
 
 ※ 본 프로그램의 무단수정 및 배포를 금합니다. <br>
-※ 상업적 활용 문의 시 sjy777star@gmail.com 으로 반드시 연락 바랍니다. <br>
+※ 프로그램의 상업적 활용, 코드 사용 문의는 sjy777star@gmail.com 으로 연락 바랍니다. <br>
 ※ Ver2.0 Latest Update Date 2020.12.21<br>
 
 <How To Use>
