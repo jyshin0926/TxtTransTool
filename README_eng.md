@@ -72,18 +72,18 @@ or right-click on TxtTransTool.exe to create a shortcut directly within the fold
     - Adjust window height as needed.
 <br><br>
 ------------------------------------------------------------------------------------<br>
-Project Start Date: Dec.15, 2020 <br>
-Dec.17, 2020: <br>
+* Project Start Date: Dec.15, 2020 <br>
+* Dec.17, 2020: <br>
   - Completed integer and decimal processing (up to billions).
   - Finalized alphabet transcription handling.
   - Mixed alphabet and number transcription implemented.
   - Enhanced English/Korean pronunciation outputs for 0-99.
   - Enabled full-sentence transcription with quotation marks.
   - English pronunciation or translation functionality for Korean inputs.
-    - ex. (cloud)/(클라우드)
+    * ex. (cloud)/(클라우드)
 <br><br>
-Dec.20, 2020 Update:
-  * Fixed spacing issues in Korean processing.
-    - ex. (24시간)/(이십 사 시 간)  --> (24시간)/(이십 사 시간)
-* Allowed spaces within the input text.
-  - ex. (4 분의 1)/(사 분의 일)
+* Dec.20, 2020 Update:
+  - Fixed spacing issues in Korean processing.
+    * ex. (24시간)/(이십 사 시 간)  --> (24시간)/(이십 사 시간)
+  - Allowed spaces within the input text.
+    * ex. (4 분의 1)/(사 분의 일)
