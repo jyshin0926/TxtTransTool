@@ -2,6 +2,7 @@
 A tool to assist with ETRI dual-transcription rule text labeling tasks<br>
 
 ※ Ver2.0 Latest Update Date 2020.12.21<br>
+※ For any inquiries, contact sjy777star@gmail.com.<br>
 
 <How To Use>
 ※ The 'Dual Transcription Tool' is a self-developed program, and security pop-ups from Windows Defender may appear. Please disable Defender temporarily to use the tool. <br>
@@ -85,9 +86,4 @@ Dec.20, 2020 Update:
   * Fixed spacing issues in Korean processing.
     - ex. (24시간)/(이십 사 시 간)  --> (24시간)/(이십 사 시간)
 * Allowed spaces within the input text.
-  - ex. (4 분의 1)/(사 분의 일)<br>
-<br><br>
-------------------------------------------------------------------------------------<br>
-<br><br>
-For any inquiries, contact sjy777star@gmail.com.
-<br><br>
+  - ex. (4 분의 1)/(사 분의 일)
