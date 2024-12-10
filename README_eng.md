@@ -86,8 +86,7 @@ Dec.20, 2020 Update:
   * Fixed spacing issues in Korean processing.
     - ex. (24시간)/(이십 사 시 간)  --> (24시간)/(이십 사 시간)
 * Allowed spaces within the input text.
-  - ex. (4 분의 1)/(사 분의 일)
-  - <br>
+  - ex. (4 분의 1)/(사 분의 일)<br>
 ------------------------------------------------------------------------------------<br>
 <br><br>
 For any inquiries, contact sjy777star@gmail.com.
