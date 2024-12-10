@@ -71,7 +71,6 @@ or right-click on TxtTransTool.exe to create a shortcut directly within the fold
     - Adjust window height as needed.
 <br><br>
 ------------------------------------------------------------------------------------<br>
-
 Project Start Date: Dec.15, 2020 <br>
 Dec.17, 2020: <br>
   - Completed integer and decimal processing (up to billions).
