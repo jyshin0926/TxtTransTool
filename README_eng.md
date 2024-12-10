@@ -69,7 +69,7 @@ or right-click on TxtTransTool.exe to create a shortcut directly within the fold
 * Additional Features:
     - Use the Windows key + arrow keys to move windows.
     - Adjust window height as needed.
-<br>
+<br><br>
 ------------------------------------------------------------------------------------<br>
 
 Project Start Date: Dec.15, 2020 <br>
@@ -87,6 +87,7 @@ Dec.20, 2020 Update:
     - ex. (24시간)/(이십 사 시 간)  --> (24시간)/(이십 사 시간)
 * Allowed spaces within the input text.
   - ex. (4 분의 1)/(사 분의 일)<br>
+<br><br>
 ------------------------------------------------------------------------------------<br>
 <br><br>
 For any inquiries, contact sjy777star@gmail.com.
